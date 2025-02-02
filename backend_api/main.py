@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.routes import router
-from app.db.database import engine
-from app.models.travel import Base
+from api.routes import router
+from db.database import engine
+from models.travel import Base
 
 # 创建数据库表
 Base.metadata.create_all(bind=engine)

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, TIMESTAMP, JSON, text
-from app.db.database import Base
+from db.database import Base
 
 class TravelRecommendation(Base):
     __tablename__ = "travel_recommendations"

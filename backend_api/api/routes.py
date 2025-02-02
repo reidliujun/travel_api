@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
-from app.db.database import get_db
-from app.models.travel import TravelRecommendation
-from app.services.deepseek import get_travel_recommendation
-from app.config import settings
+from db.database import get_db
+from models.travel import TravelRecommendation
+from services.deepseek import get_travel_recommendation
+from config import settings
 
 router = APIRouter()
 

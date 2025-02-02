@@ -1,6 +1,6 @@
 import httpx
 from fastapi import HTTPException
-from app.config import settings
+from config import settings
 
 async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
     prompt = f"你是一个专业旅行规划师，请为{type}类型的{days}天{city}旅行生成详细计划，包含每日景点、餐饮推荐、交通建议和预算分配。使用Markdown格式返回。"

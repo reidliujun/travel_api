@@ -23,12 +23,12 @@ An intelligent travel recommendation service built with FastAPI, PostgreSQL, and
 - PostgreSQL
 - Docker and Docker Compose
 
-## Setup
+## Setup backend api
 
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd travel_api
+cd travel_api/backend_api
 ```
 2. Create and activate virtual environment:
 ```bash
@@ -60,8 +60,30 @@ python -m scripts.insert_test_data
 
 7. Run the application:
 ```bash
-uvicorn app.main:app --reload
+uvicorn main:app --reload
  ```
+
+## Setup front end app
+1. Navigate to frontend directory:
+```bash
+cd frontend
+```
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create .env file (if needed):
+
+```
+VITE_API_URL=http://localhost:8000
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
 
 ## API Documentation
 

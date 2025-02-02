@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { 
   Container,
   Typography,
-  TextField,
   Button,
   Stack,
   Select,
@@ -13,14 +12,15 @@ import {
   CircularProgress,
   Alert
 } from '@mui/material'
-import pinyin from 'pinyin'
 import ReactMarkdown from 'react-markdown'  // Changed from { ReactMarkdown }
 import remarkGfm from 'remark-gfm'
 import '../styles/markdown.css'
 
 import { getTravelPlan } from '../api/travel'
+import { countries } from '../data/cities'
 
 const TravelPlanner = () => {
+  const [country, setCountry] = useState('')
   const [city, setCity] = useState('')
   const [days, setDays] = useState('3')
   const [type, setType] = useState('normal')
@@ -28,9 +28,14 @@ const TravelPlanner = () => {
   const [error, setError] = useState('')
   const [plan, setPlan] = useState('')
 
+  const handleCountryChange = (event: any) => {
+    setCountry(event.target.value)
+    setCity('') // Reset city when country changes
+  }
+
   const handleSubmit = async () => {
     if (!city) {
-      setError('请输入城市名称')
+      setError('请选择城市')
       return
     }
     
@@ -39,12 +44,8 @@ const TravelPlanner = () => {
     setPlan('')
     
     try {
-      const cityPinyin = pinyin(city, {
-        style: pinyin.STYLE_NORMAL,
-        heteronym: false
-      }).map(p => p[0]).join('')
-      
-      const response = await getTravelPlan(cityPinyin, Number(days), type)
+      // 直接使用城市的 value 值，不需要转拼音
+      const response = await getTravelPlan(city, Number(days), type)
       setPlan(response.markdown_content)
     } catch (err) {
       setError('获取旅行计划失败，请稍后重试')
@@ -60,14 +61,43 @@ const TravelPlanner = () => {
         <Typography variant="h3" component="h1" align="center">
           AI Travel Planner
         </Typography>
-        <TextField
-          fullWidth
-          label="输入城市名称（支持中文）"
-          variant="outlined"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          helperText="例如：北京、上海、广州"
-        />
+        
+        <FormControl fullWidth>
+          <InputLabel>选择国家</InputLabel>
+          <Select
+            value={country}
+            label="选择国家"
+            onChange={handleCountryChange}
+          >
+            {countries.map((country) => (
+              <MenuItem key={country.label} value={country.label}>
+                {country.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth>
+          <InputLabel>选择城市</InputLabel>
+          <Select
+            value={city}
+            label="选择城市"
+            onChange={(e) => setCity(e.target.value)}
+            disabled={!country}
+          >
+            {country && countries
+              .find(c => c.label === country)?.cities
+              .map((city) => (
+                <MenuItem key={city.value} value={city.value}>
+                  {city.label}
+                </MenuItem>
+              ))
+            }
+          </Select>
+        </FormControl>
+
+        {/* 移除 TextField 输入框 */}
+
         <FormControl fullWidth>
           <InputLabel>旅行天数</InputLabel>
           <Select

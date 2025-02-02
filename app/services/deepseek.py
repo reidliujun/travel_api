@@ -14,8 +14,9 @@ async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "deepseek-chat",
-                    "messages": [{"role": "user", "content": prompt}]
+                    "model": "deepseek-chat", # DeepSeek-V3 model
+                    "messages": [{"role": "user", "content": prompt}],
+                    "stream": false
                 }
             )
             

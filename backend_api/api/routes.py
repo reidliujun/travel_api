@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from db.database import get_db
-from models.travel import TravelRecommendation
-from services.ai import get_travel_recommendation
+from models.travel import TravelRecommendation, City
+from services.ai import get_travel_recommendation, get_city_info
 from config import settings
 
 router = APIRouter()
 
-@router.get("/{city_name}")
+@router.get("/{city_name}/advice")
 async def get_travel_advice(
     city_name: str,
     days: int,
@@ -55,3 +55,51 @@ async def get_travel_advice(
 
     db.commit()
     return recommendation
+
+@router.get("/{city_name}/info")
+async def get_city_information(
+    city_name: str,
+    db: Session = Depends(get_db)
+):
+    # Convert city name to lowercase for consistency
+    city_name = city_name.lower()
+    
+    # Check if city exists in database
+    city = db.query(City).filter(City.name == city_name).first()
+    
+    if city and city.description:
+        return {
+            "content": city.description,
+            "metadata": {
+                "city": city,
+                "format": "markdown",
+                "generated_at": datetime.now().isoformat()
+            }
+        } 
+    
+    # Get city info from AI
+    city_info = await get_city_info(city_name)
+    
+    if city:
+        # Update existing city
+        city.description = city_info["content"]
+        city.updated_at = datetime.now()
+    else:
+        # Create new city
+        city = City(
+            name=city_name,
+            description=city_info["content"]
+        )
+        db.add(city)
+    
+    db.commit()
+    db.refresh(city)
+    
+    return {
+            "content": city.description,
+            "metadata": {
+                "city": city,
+                "format": "markdown",
+                "generated_at": datetime.now().isoformat()
+            }
+        } 

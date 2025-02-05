@@ -9,14 +9,30 @@ interface TravelPlanResponse {
     type: string
     format: string
   }
-  itinerary: string
+  content: string
+}
+
+interface TravelCityInfonResponse {
+  metadata: {
+    city: string
+    format: string
+  }
+  content: string
 }
 
 export const getTravelPlan = async (city: string, days: number, type: string) => {
-  const response = await axios.get<TravelPlanResponse>(`${API_URL}/${city}?days=${days}&type=${type}`)
+  const response = await axios.get<TravelPlanResponse>(`${API_URL}/${city}/advice?days=${days}&type=${type}`)
   return {
     ...response.data,
-    markdown_content: response.data.itinerary
+    markdown_content: response.data.content
+  }
+}
+
+export const getCityInfo = async (city: string) => {
+  const response = await axios.get<TravelCityInfonResponse>(`${API_URL}/${city}/info`)
+  return {
+    ...response.data,
+    markdown_content: response.data.content
   }
 }
 

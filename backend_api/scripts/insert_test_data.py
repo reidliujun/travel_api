@@ -1,7 +1,11 @@
 from sqlalchemy import create_engine, text
 from datetime import datetime
 import json
-from app.config import settings
+# 修改导入语句
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from config import settings
 
 # Create database connection
 engine = create_engine(settings.DATABASE_URL)
@@ -13,7 +17,7 @@ test_data = [
         "days": 3,
         "type": "luxury",
         "recommendation": {
-            "itinerary": "Day 1: Visit Tsukiji Market, Luxury lunch at Sukiyabashi Jiro, Shopping in Ginza\nDay 2: Private tea ceremony, Visit teamLab Borderless, Dinner at Narisawa\nDay 3: Private tour of Senso-ji Temple, Shopping in Omotesando, Dinner at RyuGin",
+            "content": "Day 1: Visit Tsukiji Market, Luxury lunch at Sukiyabashi Jiro, Shopping in Ginza\nDay 2: Private tea ceremony, Visit teamLab Borderless, Dinner at Narisawa\nDay 3: Private tour of Senso-ji Temple, Shopping in Omotesando, Dinner at RyuGin",
             "metadata": {
                 "city": "tokyo",
                 "days": 3,
@@ -27,7 +31,7 @@ test_data = [
         "days": 2,
         "type": "normal",
         "recommendation": {
-            "itinerary": "Day 1: Visit Eiffel Tower, Notre-Dame Cathedral, Seine River cruise\nDay 2: Louvre Museum, Walk through Montmartre, Evening at Sacré-Cœur",
+            "content": "Day 1: Visit Eiffel Tower, Notre-Dame Cathedral, Seine River cruise\nDay 2: Louvre Museum, Walk through Montmartre, Evening at Sacré-Cœur",
             "metadata": {
                 "city": "paris",
                 "days": 2,
@@ -41,7 +45,7 @@ test_data = [
         "days": 4,
         "type": "budget",
         "recommendation": {
-            "itinerary": "Day 1: Free walking tour, Visit La Boqueria market\nDay 2: Park Güell (free entry before 8am), Beach day\nDay 3: Gothic Quarter exploration, Free museum day\nDay 4: Sagrada Familia (exterior), Picnic at Ciutadella Park",
+            "content": "Day 1: Free walking tour, Visit La Boqueria market\nDay 2: Park Güell (free entry before 8am), Beach day\nDay 3: Gothic Quarter exploration, Free museum day\nDay 4: Sagrada Familia (exterior), Picnic at Ciutadella Park",
             "metadata": {
                 "city": "barcelona",
                 "days": 4,
@@ -55,7 +59,7 @@ test_data = [
         "days": 2,
         "type": "luxury",
         "recommendation": {
-            "itinerary": """# 上海2日奢华之旅计划
+            "content": """# 上海2日奢华之旅计划
 
 ## 📅 Day 1：经典与现代的极致碰撞
 ### 🏨 住宿安排

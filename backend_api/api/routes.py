@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from db.database import get_db
 from models.travel import TravelRecommendation
-from services.deepseek import get_travel_recommendation
+from services.ai import get_travel_recommendation
 from config import settings
 
 router = APIRouter()
@@ -36,7 +36,7 @@ async def get_travel_advice(
     if cache and (datetime.now() - cache.updated_at).days < settings.CACHE_EXPIRY_DAYS:
         return cache.recommendation
 
-    # 调用 DeepSeek API
+    # 调用 AI API
     recommendation = await get_travel_recommendation(city_name, days, type)
 
     if cache:

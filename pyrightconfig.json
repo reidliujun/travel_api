@@ -1,0 +1,10 @@
+{
+  "include": ["backend_api"],
+  "executionEnvironments": [
+    {
+      "root": "backend_api",
+      "pythonVersion": "3.8",
+      "pythonPlatform": "Linux"
+    }
+  ]
+}

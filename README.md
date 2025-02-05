@@ -1,6 +1,6 @@
 # AI Travel Planner API
 
-An intelligent travel recommendation service built with FastAPI, PostgreSQL, and DeepSeek AI. The service provides customized travel itineraries based on city, duration, and budget preferences.
+An intelligent travel recommendation service built with FastAPI, PostgreSQL, and AI AI. The service provides customized travel itineraries based on city, duration, and budget preferences.
 
 ## Features
 
@@ -14,7 +14,7 @@ An intelligent travel recommendation service built with FastAPI, PostgreSQL, and
 - FastAPI
 - PostgreSQL
 - SQLAlchemy
-- DeepSeek AI API
+- AI API (deepseek, openai, siliconflow)
 - Docker (for database)
 
 ## Prerequisites
@@ -44,7 +44,7 @@ pip install -r requirements.txt
 4. Create .env file:
 ```plaintext
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/travel_db
-DEEPSEEK_API_KEY=your-deepseek-api-key
+AI_API_KEY=your-ai-api-key
 CACHE_EXPIRY_DAYS=7
  ```
 

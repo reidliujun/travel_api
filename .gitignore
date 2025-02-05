@@ -14,7 +14,8 @@ backend_api/*.egg
 backend_api/venv/
 backend_api/env/
 backend_api/ENV/
-
+backend_api/.env
+backend_api/.env_siliconflow
 
 # Frontend
 frontend/node_modules/

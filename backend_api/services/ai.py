@@ -9,15 +9,15 @@ async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
     async with httpx.AsyncClient(timeout=1000.0) as client:  # Set timeout to 5 minutes
         try:
             headers = {
-                "Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}",
+                "Authorization": f"Bearer {settings.AI_API_KEY}",
                 "Content-Type": "application/json"
             }
             body = {
-                "model": "deepseek-ai/DeepSeek-V3",
+                "model": settings.AI_MODEL,
                 "messages": [{"role": "user", "content": prompt}]
             }
             response = await client.post(
-                "https://api.siliconflow.cn/v1/chat/completions",
+                settings.AI_ENDPOINT,
                 headers=headers,
                 json=body
             )
@@ -28,7 +28,7 @@ async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
                 raise HTTPException(status_code=503, detail="模型服务过载，请稍后重试")
             elif response.status_code != 200:
                 print(f"API Error: {response.text}")
-                raise HTTPException(status_code=500, detail="DeepSeek API 调用失败")
+                raise HTTPException(status_code=500, detail="AI API 调用失败")
             
             # 获取 API 返回的 Markdown 内容
             result = response.json()
@@ -50,4 +50,4 @@ async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
             raise
         except Exception as e:
             print(f"Error: {str(e)}")
-            raise HTTPException(status_code=500, detail="调用 DeepSeek API 时发生错误")
+            raise HTTPException(status_code=500, detail="调用 AI API 时发生错误")

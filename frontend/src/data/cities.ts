@@ -17,6 +17,7 @@ export const countries: CountryData[] = [
       { value: 'guangzhou', label: '广州' },
       { value: 'shenzhen', label: '深圳' },
       { value: 'hangzhou', label: '杭州' },
+      { value: 'chengdu', label: '成都' },
     ]
   },
   {

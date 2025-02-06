@@ -38,7 +38,7 @@ async def get_response_from_ai(prompt: str) -> str:
             raise HTTPException(status_code=500, detail="调用 AI API 时发生错误")
 
 async def get_city_info(city: str) -> dict:
-    prompt = f"请介绍一下{city}的基本信息，控制在200字以内，并以Markdown格式返回。"
+    prompt = f"请介绍一下{city}的基本信息，控制在500字以内，并以Markdown格式返回。"
     
     markdown_content = await get_response_from_ai(prompt)
     
@@ -52,7 +52,7 @@ async def get_city_info(city: str) -> dict:
     }
 
 async def get_travel_recommendation(city: str, days: int, type: str) -> dict:
-    prompt = f"你是一个专业旅行规划师，请为{type}类型的{days}天{city}旅行生成详细计划，包含每日景点、餐饮推荐、交通建议和预算分配。使用包含表格的Markdown格式返回。控制字数在300字以内。"
+    prompt = f"你是一个专业旅行规划师，请为{type}类型的{days}天{city}旅行生成详细计划，包含每日景点、餐饮推荐、交通建议和预算分配。使用包含表格的Markdown格式返回。控制字数在800字以内。"
     
     markdown_content = await get_response_from_ai(prompt)
     
